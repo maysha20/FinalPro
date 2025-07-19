@@ -1,0 +1,154 @@
+@startuml
+
+' ========== AuthManager ==========
+class AuthManager {
+  - currentUser: String
+  - userManager: UserManager
+  - scanner: Scanner
+  + welcomeScreen(): void
+  - signUp(): boolean
+  - isStrongPassword(password: String): boolean
+  - login(): boolean
+  + getCurrentUser(): String
+}
+
+' ========== BasicCalculator ==========
+class BasicCalculator {
+  + calculateRoot(number: double, rootDegree: int): double
+}
+
+' ========== CalculatorUI ==========
+class CalculatorUI {
+  - authManager: AuthManager
+  - equationSolver: EquationSolver
+  - evaluator: ExpressionEvaluator
+  - scanner: Scanner
+  - historyManager: HistoryManager
+  + CalculatorUI()
+  + start(): void
+  - handleExpressionEvaluation(): void
+  - handleEquations(): void
+  - handleLinearSystem(): void
+  - handleGraphExpression(): void
+  - replaceTrigFunction(expr: String, func: String, op: DoubleUnaryOperator): String
+  - areParenthesesBalanced(expr: String): boolean
+  + showEquationsMenu(scanner: Scanner): int
+  - findClosingParen(expr: String, start: int): int
+}
+
+' ========== EquationSolver ==========
+class EquationSolver {
+  + solveLinearEquation(a: double, b: double): String
+  + solveQuadraticEquation(a: double, b: double, c: double): String
+}
+
+' ========== ExpressionEvaluator ==========
+class ExpressionEvaluator {
+  + evaluate(expression: String): double
+}
+
+' ========== GraphPlotter ==========
+class GraphPlotter {
+  - expression: String
+  - xValues: List<Double>
+  - yValues: List<Double>
+  - zoom: double
+  - offsetX: int
+  - offsetY: int
+  - dragStart: Point
+  + GraphPlotter(expression: String)
+  - generateData(): void
+  + paintComponent(g: Graphics): void
+  - drawGraph(g2: Graphics2D): void
+  + showGraph(expression: String): void
+}
+
+' ========== HistoryManager ==========
+class HistoryManager {
+  - historyFile: String
+  + addToHistory(operation: String, result: double): void
+  + showHistory(): void
+}
+
+' ========== InputParser ==========
+class InputParser {
+  + parse(input: String): Calculation
+  - parseOperands(parts: String[]): double[]
+}
+
+' ========== LinearSystemSolver ==========
+class LinearSystemSolver {
+  + solveByGauss(augmentedMatrix: double[][]): double[]
+}
+
+' ========== LogParserFix ==========
+class LogParserFix {
+  + preprocessLog(expression: String): String
+  - findClosingParenthesis(str: String, openIndex: int): int
+}
+
+' ========== RootParserFix ==========
+class RootParserFix {
+  + preprocessRootFunction(expression: String): String
+  - findClosingParenthesis(str: String, openIndex: int): int
+}
+
+' ========== UserManager ==========
+class UserManager {
+  - USERS_FILE: String
+  - users: Map<String, String>
+  + UserManager()
+  - loadUsers(): void
+  + isUsernameTaken(username: String): boolean
+  - saveUser(username: String, password: String): void
+  + login(username: String, password: String): boolean
+  + register(username: String, password: String): boolean
+}
+
+' ========== GradeDistributionChartFrame ==========
+class GradeDistributionChartFrame {
+  - bins: int[]
+  + GradeDistributionChartFrame(grades: List<StudentGrade>)
+  - countGrades(grades: List<StudentGrade>): void
+  - getBinIndex(grade: double): int
+  - getBinLabel(index: int): String
+}
+
+' ========== GradeEntryFrame ==========
+class GradeEntryFrame {
+  - gradeManager: GradeManager
+  - outputArea: JTextArea
+  + GradeEntryFrame()
+}
+
+' ========== GradeManager ==========
+class GradeManager {
+  - grades: List<StudentGrade>
+  + addGrade(name: String, grade: double): void
+  + getAverage(): double
+  + getMax(): double
+  + getMin(): double
+  + getStandardDeviation(): double
+  + getGrades(): List<StudentGrade>
+}
+
+' ========== StudentGrade ==========
+class StudentGrade {
+  - name: String
+  - grade: double
+  + StudentGrade(name: String, grade: double)
+}
+
+' ========== العلاقات ==========
+CalculatorUI --> AuthManager
+CalculatorUI --> EquationSolver
+CalculatorUI --> ExpressionEvaluator
+CalculatorUI --> HistoryManager
+CalculatorUI --> GraphPlotter
+CalculatorUI --> InputParser
+AuthManager --> UserManager
+GradeEntryFrame --> GradeManager
+GradeManager --> StudentGrade
+GradeDistributionChartFrame --> StudentGrade
+
+@enduml
